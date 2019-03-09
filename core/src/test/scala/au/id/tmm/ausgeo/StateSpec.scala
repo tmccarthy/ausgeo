@@ -18,6 +18,15 @@ class StateSpec extends ImprovedFlatSpec {
     it should s"have the full name '$expectedName'" in assert(state.name === expectedName)
     it should s"have the nice name '$expectedNiceName'" in assert(state.niceName === expectedNiceName)
 
+    def assertBuiltFrom(abbreviation: String): Unit =
+      it can s"be built from the abbreviation'$abbreviation" in {
+        assert(State.fromAbbreviation(abbreviation) === Some(state))
+      }
+
+    assertBuiltFrom(expectedAbbreviation.toUpperCase)
+    assertBuiltFrom(expectedAbbreviation.toLowerCase)
+    assertBuiltFrom(expectedAbbreviation.toLowerCase.capitalize)
+
     if (expectedIsTerritory) {
       it should s"be an instance of Territory" in {
         state match {
@@ -104,6 +113,10 @@ class StateSpec extends ImprovedFlatSpec {
     expectedNiceName = "the Australian Capital Territory",
     expectedIsTerritory = true,
   )
+
+  "building a state from an abbreviation" should "fail for invalid input" in {
+    assert(State.fromAbbreviation("invalid") === None)
+  }
 
   "the default ordering of the states" should "be by size descending" in {
     assert(State.allStates.toList.sorted === List(NSW, VIC, QLD, WA, SA, TAS, NT, ACT))

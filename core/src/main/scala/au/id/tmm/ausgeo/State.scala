@@ -65,6 +65,18 @@ object State {
   case object NT extends Territory
   case object ACT extends Territory
 
+  def fromAbbreviation(abbreviation: String): Option[State] = abbreviation.toUpperCase match {
+    case "NSW" => Some(NSW)
+    case "VIC" => Some(VIC)
+    case "QLD" => Some(QLD)
+    case "WA" => Some(WA)
+    case "SA" => Some(SA)
+    case "TAS" => Some(TAS)
+    case "NT" => Some(NT)
+    case "ACT" => Some(ACT)
+    case _ => None
+  }
+
   val allStates: Set[State] = Set(NSW, VIC, QLD, WA, SA, TAS, NT, ACT)
 
   implicit val orderBySize: Ordering[State] = Ordering.by[State, Int] {
