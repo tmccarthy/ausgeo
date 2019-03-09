@@ -1,0 +1,3 @@
+rootProject.name = 'ausgeo'
+
+include 'core'
