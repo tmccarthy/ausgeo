@@ -19,6 +19,9 @@ gradle-app.setting
 # Cache of project
 .gradletasknamecache
 
+# GPG keys
+*.gpg
+
 # Scala-IDE specific
 .scala_dependencies
 .worksheet
