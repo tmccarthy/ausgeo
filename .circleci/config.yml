@@ -6,7 +6,7 @@ use_jdk_8: &use_jdk_8
 
 use_jdk_11: &use_jdk_11
   docker:
-    - image: circleci/openjdk:11.0.3-jdk
+    - image: circleci/openjdk:11.0.2-jdk
 
 use_environment: &use_environment
   working_directory: ~/repo
