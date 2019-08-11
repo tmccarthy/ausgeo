@@ -21,6 +21,10 @@ load_cache_step: &load_cache_step
         - v1-dependencies-{{ checksum "build.sbt" }}
         # fallback to using the latest cache if no exact match is found
         - v1-dependencies-
+      paths:
+        - "~/.ivy2/cache"
+        - "~/.sbt"
+        - "~/.m2"
 
 update_sbt_dependencies_step: &update_sbt_dependencies_step
   - run:
