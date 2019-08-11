@@ -95,13 +95,13 @@ jobs:
     <<: *test
 
   release_scala_2_12:
-    <<: *use_jdk_11
+    <<: *use_jdk_8
     <<: *use_scala_2_12
     <<: *use_environment
     <<: *release
 
   release_scala_2_13:
-    <<: *use_jdk_11
+    <<: *use_jdk_8
     <<: *use_scala_2_13
     <<: *use_environment
     <<: *release
