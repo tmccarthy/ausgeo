@@ -1,6 +1,0 @@
-rootProject.name = 'ausgeo'
-
-include 'core', 'codecs'
-
-project(':core').name = 'ausgeo-core'
-project(':codecs').name = 'ausgeo-codecs'
