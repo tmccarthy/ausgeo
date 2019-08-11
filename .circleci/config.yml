@@ -25,10 +25,6 @@ use_environment: &use_environment
 
 load_cache_step: &load_cache_step
   - restore_cache:
-      keys:
-        - v1-dependencies-{{ checksum "build.sbt" }}
-        # fallback to using the latest cache if no exact match is found
-        - v1-dependencies-
       paths:
         - "~/.ivy2/cache"
         - "~/.sbt"
@@ -42,8 +38,9 @@ update_sbt_dependencies_step: &update_sbt_dependencies_step
 save_cache_step: &save_cache_step
   - save_cache:
       paths:
-        - ~/.m2
-      key: v1-dependencies--{{ checksum "build.sbt" }}
+        - "~/.ivy2/cache"
+        - "~/.sbt"
+        - "~/.m2"
 
 run_tests_step: &run_tests_step
   - run:
