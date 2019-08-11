@@ -43,22 +43,24 @@ class CodecsSpec extends FlatSpec {
     assert(
       Address(Vector("123 First St"), "Melbourne", Postcode.makeUnsafe("3000"), State.VIC).asJson ===
         Json.obj(
-          "lines" -> Vector("123 First St").asJson,
-          "suburb" -> "Melbourne".asJson,
+          "lines"    -> Vector("123 First St").asJson,
+          "suburb"   -> "Melbourne".asJson,
           "postcode" -> Postcode.makeUnsafe("3000").asJson,
-          "state" -> State.VIC.asJson,
-        )
+          "state"    -> State.VIC.asJson,
+        ),
     )
   }
 
   "decoding Address" should "work" in {
     assert(
-      Json.obj(
-        "lines" -> Vector("123 First St").asJson,
-        "suburb" -> "Melbourne".asJson,
-        "postcode" -> Postcode.makeUnsafe("3000").asJson,
-        "state" -> State.VIC.asJson,
-      ).as[Address] === Right(Address(Vector("123 First St"), "Melbourne", Postcode.makeUnsafe("3000"), State.VIC))
+      Json
+        .obj(
+          "lines"    -> Vector("123 First St").asJson,
+          "suburb"   -> "Melbourne".asJson,
+          "postcode" -> Postcode.makeUnsafe("3000").asJson,
+          "state"    -> State.VIC.asJson,
+        )
+        .as[Address] === Right(Address(Vector("123 First St"), "Melbourne", Postcode.makeUnsafe("3000"), State.VIC)),
     )
   }
 

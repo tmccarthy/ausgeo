@@ -6,12 +6,12 @@ import org.scalatest.FlatSpec
 class StateSpec extends FlatSpec {
 
   def testsForState(
-                     state: State,
-                     expectedAbbreviation: String,
-                     expectedName: String,
-                     expectedNiceName: String,
-                     expectedIsTerritory: Boolean,
-                   ): Unit = {
+    state: State,
+    expectedAbbreviation: String,
+    expectedName: String,
+    expectedNiceName: String,
+    expectedIsTerritory: Boolean,
+  ): Unit = {
     behavior of state.toString
 
     it should s"be abbreviated as '$expectedAbbreviation" in assert(state.abbreviation === expectedAbbreviation)
@@ -30,7 +30,7 @@ class StateSpec extends FlatSpec {
     if (expectedIsTerritory) {
       it should s"be an instance of Territory" in {
         state match {
-          case _: Territory => succeed
+          case _: Territory   => succeed
           case _: StateProper => fail
         }
       }
@@ -40,7 +40,7 @@ class StateSpec extends FlatSpec {
     } else {
       it should s"be an instance of StateProper" in {
         state match {
-          case _: Territory => fail
+          case _: Territory   => fail
           case _: StateProper => succeed
         }
       }

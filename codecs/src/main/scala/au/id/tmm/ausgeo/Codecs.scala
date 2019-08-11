@@ -9,7 +9,7 @@ object Codecs {
   implicit val postcodeEncoder: Encoder[Postcode] = Encoder.encodeString.contramap(_.asString)
   implicit val postcodeDecoder: Decoder[Postcode] = Decoder.decodeString.emap(Postcode(_).left.map(_.getMessage))
 
-  private val concreteStateEncoder: Encoder[State] = Encoder.encodeString.contramap(_.abbreviation)
+  private val concreteStateEncoder: Encoder[State]  = Encoder.encodeString.contramap(_.abbreviation)
   implicit def stateEncoder[E <: State]: Encoder[E] = concreteStateEncoder.asInstanceOf[Encoder[E]]
   implicit val stateDecoder: Decoder[State] = Decoder.decodeString.emap { abbreviation =>
     State.fromAbbreviation(abbreviation).toRight(s"Invalid state $abbreviation")
