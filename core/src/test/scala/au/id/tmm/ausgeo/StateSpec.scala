@@ -1,9 +1,9 @@
 package au.id.tmm.ausgeo
 
 import au.id.tmm.ausgeo.State._
-import au.id.tmm.utilities.testing.ImprovedFlatSpec
+import org.scalatest.FlatSpec
 
-class StateSpec extends ImprovedFlatSpec {
+class StateSpec extends FlatSpec {
 
   def testsForState(
                      state: State,
@@ -12,7 +12,7 @@ class StateSpec extends ImprovedFlatSpec {
                      expectedNiceName: String,
                      expectedIsTerritory: Boolean,
                    ): Unit = {
-    behaviour of state.toString
+    behavior of state.toString
 
     it should s"be abbreviated as '$expectedAbbreviation" in assert(state.abbreviation === expectedAbbreviation)
     it should s"have the full name '$expectedName'" in assert(state.name === expectedName)

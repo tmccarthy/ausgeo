@@ -1,8 +1,8 @@
 package au.id.tmm.ausgeo
 
-import au.id.tmm.utilities.testing.ImprovedFlatSpec
+import org.scalatest.FlatSpec
 
-class PostcodeSpec extends ImprovedFlatSpec {
+class PostcodeSpec extends FlatSpec {
 
   "a postcode" can "not be made if it is less than 4 digits" in {
     assert(Postcode("123") === Left(Postcode.CreationError.InvalidLength(3)))

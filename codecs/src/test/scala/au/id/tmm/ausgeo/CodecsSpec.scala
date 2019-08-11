@@ -1,11 +1,11 @@
 package au.id.tmm.ausgeo
 
 import au.id.tmm.ausgeo.Codecs._
-import au.id.tmm.utilities.testing.ImprovedFlatSpec
 import io.circe.Json
 import io.circe.syntax.EncoderOps
+import org.scalatest.FlatSpec
 
-class CodecsSpec extends ImprovedFlatSpec {
+class CodecsSpec extends FlatSpec {
 
   "encoding LatLong" should "work" in {
     assert(LatLong(-35, 42).asJson === Json.obj("lat" -> (-35).asJson, "long" -> 42.asJson))
