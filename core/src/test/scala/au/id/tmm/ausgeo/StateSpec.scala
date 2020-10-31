@@ -14,18 +14,27 @@ class StateSpec extends FlatSpec {
   ): Unit = {
     behavior of state.toString
 
-    it should s"be abbreviated as '$expectedAbbreviation" in assert(state.abbreviation === expectedAbbreviation)
+    it should s"be abbreviated as '$expectedAbbreviation'" in assert(state.abbreviation === expectedAbbreviation)
     it should s"have the full name '$expectedName'" in assert(state.name === expectedName)
     it should s"have the nice name '$expectedNiceName'" in assert(state.niceName === expectedNiceName)
 
-    def assertBuiltFrom(abbreviation: String): Unit =
-      it can s"be built from the abbreviation'$abbreviation" in {
+    def assertBuiltFromAbbreviation(abbreviation: String): Unit =
+      it can s"be built from the abbreviation '$abbreviation'" in {
         assert(State.fromAbbreviation(abbreviation) === Some(state))
       }
 
-    assertBuiltFrom(expectedAbbreviation.toUpperCase)
-    assertBuiltFrom(expectedAbbreviation.toLowerCase)
-    assertBuiltFrom(expectedAbbreviation.toLowerCase.capitalize)
+    def assertBuiltFromName(name: String): Unit =
+      it can s"be built from the name '$name'" in {
+        assert(State.fromName(name) === Some(state))
+      }
+
+    assertBuiltFromAbbreviation(expectedAbbreviation.toUpperCase)
+    assertBuiltFromAbbreviation(expectedAbbreviation.toLowerCase)
+    assertBuiltFromAbbreviation(expectedAbbreviation.toLowerCase.capitalize)
+
+    assertBuiltFromName(expectedName.toUpperCase)
+    assertBuiltFromName(expectedName.toLowerCase)
+    assertBuiltFromName(expectedName.toLowerCase.capitalize)
 
     if (expectedIsTerritory) {
       it should s"be an instance of Territory" in {

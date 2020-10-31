@@ -2,7 +2,7 @@ package au.id.tmm.ausgeo
 
 import au.id.tmm.ausgeo.State._
 
-sealed trait State {
+sealed abstract class State {
 
   def name: String = this match {
     case NSW => "New South Wales"
@@ -74,6 +74,18 @@ object State {
     case "NT"  => Some(NT)
     case "ACT" => Some(ACT)
     case _     => None
+  }
+
+  def fromName(name: String): Option[State] = name.toUpperCase() match {
+    case "NEW SOUTH WALES"              => Some(NSW)
+    case "VICTORIA"                     => Some(VIC)
+    case "QUEENSLAND"                   => Some(QLD)
+    case "WESTERN AUSTRALIA"            => Some(WA)
+    case "SOUTH AUSTRALIA"              => Some(SA)
+    case "TASMANIA"                     => Some(TAS)
+    case "NORTHERN TERRITORY"           => Some(NT)
+    case "AUSTRALIAN CAPITAL TERRITORY" => Some(ACT)
+    case _                              => None
   }
 
   val allStates: Set[State] = Set(NSW, VIC, QLD, WA, SA, TAS, NT, ACT)
