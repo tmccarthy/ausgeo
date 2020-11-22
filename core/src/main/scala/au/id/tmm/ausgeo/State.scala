@@ -76,6 +76,9 @@ object State {
     case _     => None
   }
 
+  def fromAbbreviationOrError(abbreviation: String): Either[ParsedFromAbbreviationException, State] =
+    fromAbbreviation(abbreviation).toRight(ParsedFromAbbreviationException(abbreviation))
+
   def fromName(name: String): Option[State] = name.toUpperCase() match {
     case "NEW SOUTH WALES"              => Some(NSW)
     case "VICTORIA"                     => Some(VIC)
@@ -87,6 +90,9 @@ object State {
     case "AUSTRALIAN CAPITAL TERRITORY" => Some(ACT)
     case _                              => None
   }
+
+  def fromNameOrError(name: String): Either[ParsedFromNameException, State] =
+    fromName(name).toRight(ParsedFromNameException(name))
 
   val allStates: Set[State] = Set(NSW, VIC, QLD, WA, SA, TAS, NT, ACT)
 
@@ -100,5 +106,10 @@ object State {
     case NT  => 7
     case ACT => 8
   }
+
+  final case class ParsedFromAbbreviationException(badAbbreviation: String)
+      extends Exception(s"""Bad abbreviation for state: "$badAbbreviation"""")
+
+  final case class ParsedFromNameException(badName: String) extends Exception(s"""Bad name for state: "$badName"""")
 
 }

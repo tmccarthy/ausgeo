@@ -32,9 +32,17 @@ class StateSpec extends FlatSpec {
     assertBuiltFromAbbreviation(expectedAbbreviation.toLowerCase)
     assertBuiltFromAbbreviation(expectedAbbreviation.toLowerCase.capitalize)
 
+    it can "not be built from the abbreviation 'asdf'" in {
+      assert(State.fromAbbreviationOrError("asdf") === Left(State.ParsedFromAbbreviationException("asdf")))
+    }
+
     assertBuiltFromName(expectedName.toUpperCase)
     assertBuiltFromName(expectedName.toLowerCase)
     assertBuiltFromName(expectedName.toLowerCase.capitalize)
+
+    it can "not be built from the name 'asdf'" in {
+      assert(State.fromNameOrError("asdf") === Left(State.ParsedFromNameException("asdf")))
+    }
 
     if (expectedIsTerritory) {
       it should s"be an instance of Territory" in {
