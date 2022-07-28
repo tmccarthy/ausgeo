@@ -36,7 +36,7 @@ val scalatestVersion = "3.0.8" // TODO move to mUnit
 lazy val root = tlCrossRootProject
   .aggregate(
     core,
-    codecs,
+    circe,
   )
 
 lazy val core = project
@@ -46,9 +46,9 @@ lazy val core = project
     libraryDependencies += "org.scalatest" %% "scalatest" % scalatestVersion % Test,
   )
 
-lazy val codecs = project // TODO should rename to "circe"
-  .in(file("codecs"))
-  .settings(name := "ausgeo-codecs")
+lazy val circe = project // TODO should rename to "circe"
+  .in(file("circe"))
+  .settings(name := "ausgeo-circe")
   .dependsOn(core)
   .settings(
     libraryDependencies += "io.circe" %% "circe-core" % "0.15.0-M1",
