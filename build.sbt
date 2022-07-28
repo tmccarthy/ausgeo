@@ -31,7 +31,8 @@ ThisBuild / tlFatalWarnings := true
 addCommandAlias("check", ";githubWorkflowCheck;scalafmtSbtCheck;+scalafmtCheckAll;+test")
 addCommandAlias("fix", ";githubWorkflowGenerate;+scalafmtSbt;+scalafmtAll")
 
-val scalatestVersion = "3.0.8" // TODO move to mUnit
+val mUnitVersion = "0.7.27"
+val circeVersion = "0.15.0-M1"
 
 lazy val root = tlCrossRootProject
   .aggregate(
@@ -43,16 +44,20 @@ lazy val core = project
   .in(file("core"))
   .settings(name := "ausgeo-core")
   .settings(
-    libraryDependencies += "org.scalatest" %% "scalatest" % scalatestVersion % Test,
+    testFrameworks += new TestFramework("munit.Framework"),
+    libraryDependencies += "org.scalameta" %% "munit" % mUnitVersion % Test,
   )
 
-lazy val circe = project // TODO should rename to "circe"
+lazy val circe = project
   .in(file("circe"))
   .settings(name := "ausgeo-circe")
   .dependsOn(core)
   .settings(
-    libraryDependencies += "io.circe" %% "circe-core" % "0.15.0-M1",
+    libraryDependencies += "io.circe" %% "circe-core" % circeVersion,
   )
   .settings(
-    libraryDependencies += "org.scalatest" %% "scalatest" % scalatestVersion % Test,
+    testFrameworks += new TestFramework("munit.Framework"),
+    libraryDependencies += "org.scalameta" %% "munit"            % mUnitVersion % Test,
+    libraryDependencies += "io.circe"      %% "circe-testing"    % circeVersion % Test,
+    libraryDependencies += "org.typelevel" %% "discipline-munit" % "1.0.9"      % Test,
   )
