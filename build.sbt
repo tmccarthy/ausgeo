@@ -1,15 +1,39 @@
-import DependencySettings._
+name := "ausgeo"
 
-addCompilerPlugin("org.typelevel" % "kind-projector" % "0.10.3" cross CrossVersion.binary)
+ThisBuild / tlBaseVersion := "0.3"
 
-val settingsHelper = ProjectSettingsHelper("au.id.tmm","ausgeo")()
+Sonatype.SonatypeKeys.sonatypeProfileName := "au.id.tmm"
+ThisBuild / organization := "au.id.tmm.ausgeo"
+ThisBuild / organizationName := "Timothy McCarthy"
+ThisBuild / startYear := Some(2022)
+ThisBuild / licenses := Seq(License.Apache2)
+ThisBuild / developers := List(
+  tlGitHubDev("tmccarthy", "Timothy McCarthy"),
+)
 
-settingsHelper.settingsForBuild
+val Scala213 = "2.13.8"
+ThisBuild / scalaVersion := Scala213
+ThisBuild / crossScalaVersions := Seq(
+  Scala213,
+//  "3.1.3", // TODO
+)
 
-lazy val root = project
-  .in(file("."))
-  .settings(settingsHelper.settingsForRootProject)
-  .settings(console := (console in Compile in core).value)
+ThisBuild / githubWorkflowJavaVersions := List(
+  JavaSpec.temurin("11"),
+  JavaSpec.temurin("17"),
+)
+
+ThisBuild / tlCiHeaderCheck := false
+ThisBuild / tlCiScalafmtCheck := true
+ThisBuild / tlCiMimaBinaryIssueCheck := false
+ThisBuild / tlFatalWarnings := true
+
+addCommandAlias("check", ";githubWorkflowCheck;scalafmtSbtCheck;+scalafmtCheckAll;+test")
+addCommandAlias("fix", ";githubWorkflowGenerate;+scalafmtSbt;+scalafmtAll")
+
+val scalatestVersion = "3.0.8" // TODO move to mUnit
+
+lazy val root = tlCrossRootProject
   .aggregate(
     core,
     codecs,
@@ -17,14 +41,18 @@ lazy val root = project
 
 lazy val core = project
   .in(file("core"))
-  .settings(settingsHelper.settingsForSubprojectCalled("core"))
-
-lazy val codecs = project
-  .in(file("codecs"))
-  .settings(settingsHelper.settingsForSubprojectCalled("codecs"))
+  .settings(name := "ausgeo-core")
   .settings(
-    circeDependency,
+    libraryDependencies += "org.scalatest" %% "scalatest" % scalatestVersion % Test,
   )
-  .dependsOn(core)
 
-addCommandAlias("check", ";+test;scalafmtCheckAll")
+lazy val codecs = project // TODO should rename to "circe"
+  .in(file("codecs"))
+  .settings(name := "ausgeo-codecs")
+  .dependsOn(core)
+  .settings(
+    libraryDependencies += "io.circe" %% "circe-core" % "0.15.0-M1",
+  )
+  .settings(
+    libraryDependencies += "org.scalatest" %% "scalatest" % scalatestVersion % Test,
+  )

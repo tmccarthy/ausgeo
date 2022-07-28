@@ -48,7 +48,7 @@ class StateSpec extends FlatSpec {
       it should s"be an instance of Territory" in {
         state match {
           case _: Territory   => succeed
-          case _: StateProper => fail
+          case _: StateProper => fail()
         }
       }
 
@@ -57,7 +57,7 @@ class StateSpec extends FlatSpec {
     } else {
       it should s"be an instance of StateProper" in {
         state match {
-          case _: Territory   => fail
+          case _: Territory   => fail()
           case _: StateProper => succeed
         }
       }
