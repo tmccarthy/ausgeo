@@ -9,8 +9,8 @@ final case class Postcode private (asString: String) extends AnyVal {
 
 object Postcode {
 
-  private val validPostcodePattern: Regex = """^\d{4}$""".r
-  private val onlyNumbersPattern: Regex   = """^\d+$""".r
+  private val validPostcodePattern: Regex = """^[0-9]{4}$""".r
+  private val onlyNumbersPattern: Regex   = """^[0-9]+$""".r
 
   def apply(asString: String): Either[CreationError, Postcode] = asString match {
     case validPostcodePattern() => Right(new Postcode(asString))

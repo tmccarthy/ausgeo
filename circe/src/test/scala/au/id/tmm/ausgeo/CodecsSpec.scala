@@ -1,11 +1,15 @@
 package au.id.tmm.ausgeo
 
+import au.id.tmm.ausgeo.Arbs._
 import au.id.tmm.ausgeo.Codecs._
+import au.id.tmm.ausgeo.Instances._
 import io.circe.Json
 import io.circe.syntax.EncoderOps
-import munit.FunSuite
+import io.circe.testing.CodecTests
+import io.circe.testing.instances._
+import munit.DisciplineSuite
 
-class CodecsSpec extends FunSuite {
+class CodecsSpec extends DisciplineSuite {
 
   test("encoding LatLong should work") {
     assertEquals(LatLong(-35, 42).asJson, Json.obj("lat" -> (-35).asJson, "long" -> 42.asJson))
@@ -64,5 +68,10 @@ class CodecsSpec extends FunSuite {
       Right(Address(Vector("123 First St"), "Melbourne", Postcode.makeUnsafe("3000"), State.VIC)),
     )
   }
+
+  checkAll("LatLong codec", CodecTests[LatLong].codec)
+  checkAll("Postcode codec", CodecTests[Postcode].codec)
+  checkAll("State codec", CodecTests[State].codec)
+  checkAll("Address codec", CodecTests[Address].codec)
 
 }

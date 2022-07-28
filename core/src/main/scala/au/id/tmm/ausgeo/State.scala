@@ -48,6 +48,8 @@ sealed abstract class State {
       name
     }
 
+  override def hashCode(): Int = State.ordinalBySize(this)
+
 }
 
 object State {
@@ -96,16 +98,18 @@ object State {
 
   val allStates: Set[State] = Set(NSW, VIC, QLD, WA, SA, TAS, NT, ACT)
 
-  implicit val orderBySize: Ordering[State] = Ordering.by[State, Int] {
-    case NSW => 1
-    case VIC => 2
-    case QLD => 3
-    case WA  => 4
-    case SA  => 5
-    case TAS => 6
-    case NT  => 7
-    case ACT => 8
+  def ordinalBySize(state: State): Int = state match {
+    case NSW => 0
+    case VIC => 1
+    case QLD => 2
+    case WA  => 3
+    case SA  => 4
+    case TAS => 5
+    case NT  => 6
+    case ACT => 7
   }
+
+  implicit val orderBySize: Ordering[State] = Ordering.by[State, Int](ordinalBySize)
 
   final case class ParsedFromAbbreviationException(badAbbreviation: String)
       extends Exception(s"""Bad abbreviation for state: "$badAbbreviation"""")
