@@ -40,6 +40,8 @@ lazy val root = tlCrossRootProject
   .aggregate(
     core,
     circe,
+    cats,
+    scalacheck,
   )
 
 lazy val core = project

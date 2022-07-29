@@ -18,13 +18,17 @@ class ArbsTest extends ScalaCheckSuite {
   }
 
   property("Postcode always 4 digits") {
-    forAll { (postcode: Postcode) => postcode.asString.length == 4 }
+    forAll { (postcode: Postcode) =>
+      postcode.asString.length == 4
+    }
   }
 
   property("Postcode always numeric") {
     val digits = Range.inclusive(0, 9).map(_.toString.charAt(0)).toSet
 
-    forAll { (postcode: Postcode) => postcode.asString.forall(c => digits.contains(c)) }
+    forAll { (postcode: Postcode) =>
+      postcode.asString.forall(c => digits.contains(c))
+    }
   }
 
   test("State ExhaustiveCheck") {

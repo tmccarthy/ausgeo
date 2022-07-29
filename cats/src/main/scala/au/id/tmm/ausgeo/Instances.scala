@@ -5,8 +5,8 @@ import cats.kernel.{BoundedEnumerable, Eq, Order}
 
 object Instances {
 
-  implicit val ausgeoEqForAddress: Eq[Address] = Eq.fromUniversalEquals
-  implicit val ausgeoEqForLatLong: Eq[LatLong] = Eq.by(l => (l.lat, l.long))
+  implicit val ausgeoEqForAddress: Eq[Address]         = Eq.fromUniversalEquals
+  implicit val ausgeoEqForLatLong: Eq[LatLong]         = Eq.by(l => (l.lat, l.long))
   implicit val ausgeoOrderForPostcode: Order[Postcode] = Order.fromOrdering
   implicit val ausgeoInstancesForState: Order[State] with BoundedEnumerable[State] =
     new Order[State] with BoundedEnumerable[State] {
